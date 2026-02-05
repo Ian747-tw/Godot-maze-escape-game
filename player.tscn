@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://deff0y8d7ch8i"]
+
+[ext_resource type="Texture2D" uid="uid://dj5qqnbco5vbo" path="res://runner.png" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://bcomabn7aiil2" path="res://player.gd" id="1_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://bg3euabhl5jcu" path="res://cone.png" id="3_hqtel"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4flbx"]
+size = Vector2(57, 91)
+
+[node name="Player" type="CharacterBody2D" groups=["player", "player_"]]
+z_index = 3
+collision_layer = 2
+collision_mask = 13
+script = ExtResource("1_i3pqv")
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_4flbx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4.5, -2.5)
+shape = SubResource("RectangleShape2D_4flbx")
+
+[node name="Flashlight" type="PointLight2D" parent="."]
+energy = 1.47
+shadow_enabled = true
+texture = ExtResource("3_hqtel")
+texture_scale = 0.35
+
+[node name="FootStepTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="InteractionRay" type="RayCast2D" parent="."]
+target_position = Vector2(41, 0)
+collide_with_areas = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+
+[connection signal="timeout" from="FootStepTimer" to="." method="_on_foot_step_timer_timeout"]

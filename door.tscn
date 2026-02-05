@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://duyx0y6xnv800"]
+
+[ext_resource type="Script" uid="uid://by2p5i0d2n00q" path="res://door.gd" id="1_v6xrn"]
+[ext_resource type="Texture2D" uid="uid://dh6qlgbssx5y4" path="res://door_new.png" id="2_v6xrn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ba8gm"]
+size = Vector2(16, 112)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_v6xrn"]
+polygon = PackedVector2Array(0, 0, 16, 0, 16, 112, 0, 112)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v6xrn"]
+size = Vector2(47, 112)
+
+[node name="Door" type="Node2D" groups=["player"]]
+script = ExtResource("1_v6xrn")
+metadata/_edit_group_ = true
+
+[node name="Hinge" type="Node2D" parent="."]
+metadata/_edit_group_ = true
+
+[node name="DoorSprite" type="Sprite2D" parent="Hinge"]
+z_index = 2
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(8, 56)
+texture = ExtResource("2_v6xrn")
+
+[node name="DoorBody" type="StaticBody2D" parent="Hinge"]
+position = Vector2(0, 56)
+collision_layer = 8
+collision_mask = 6
+metadata/_edit_group_ = true
+
+[node name="DoorCollision" type="CollisionShape2D" parent="Hinge/DoorBody"]
+position = Vector2(8, 0)
+shape = SubResource("RectangleShape2D_ba8gm")
+
+[node name="DoorOccluder" type="LightOccluder2D" parent="Hinge"]
+occluder = SubResource("OccluderPolygon2D_v6xrn")
+
+[node name="InteractArea" type="Area2D" parent="Hinge"]
+collision_layer = 8
+collision_mask = 6
+metadata/_edit_group_ = true
+
+[node name="InteractShape" type="CollisionShape2D" parent="Hinge/InteractArea" groups=["player"]]
+position = Vector2(7.5, 56)
+shape = SubResource("RectangleShape2D_v6xrn")
+
+[node name="DoorSfx" type="AudioStreamPlayer2D" parent="."]

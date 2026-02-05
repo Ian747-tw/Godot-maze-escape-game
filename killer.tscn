@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://dx83uju4ivgqf"]
+
+[ext_resource type="Script" uid="uid://b5lg25p83yli0" path="res://killer.gd" id="1_bjrjw"]
+[ext_resource type="Texture2D" uid="uid://coutrv4fi2piu" path="res://killer.png" id="1_tj6hx"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bjrjw"]
+radius = 14.0
+height = 38.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bjrjw"]
+radius = 42.44997
+
+[node name="Killer" type="CharacterBody2D" groups=["killer", "player"]]
+collision_layer = 4
+collision_mask = 11
+safe_margin = 0.04
+script = ExtResource("1_bjrjw")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5547619, 0.59765625)
+texture = ExtResource("1_tj6hx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player"]]
+position = Vector2(0, -0.5)
+shape = SubResource("CapsuleShape2D_bjrjw")
+
+[node name="Head" type="Node2D" parent="."]
+metadata/_edit_group_ = true
+
+[node name="VisionRay" type="RayCast2D" parent="Head"]
+target_position = Vector2(283, 0)
+collision_mask = 2
+
+[node name="DoorRay" type="RayCast2D" parent="."]
+target_position = Vector2(75, 0)
+collision_mask = 8
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." groups=["player"]]
+path_desired_distance = 14.0
+target_desired_distance = 18.0
+radius = 15.0
+debug_enabled = true
+
+[node name="CatchArea" type="Area2D" parent="." groups=["killer", "player"]]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CatchArea" groups=["player"]]
+shape = SubResource("CircleShape2D_bjrjw")
