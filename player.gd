@@ -93,5 +93,8 @@ func _emit_footsteps(delta: float) -> void:
 		SoundSystem.emit_sound(global_position, loud, kind, self)
 	
 func win() -> void:
-	get_tree().paused = true
-	print("YOU WIN")
+	if get_parent().has_method("_win"):
+		get_parent()._win()
+	else:
+		get_tree().paused = true
+		print("YOU WIN")

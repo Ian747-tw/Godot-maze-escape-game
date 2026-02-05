@@ -60,8 +60,11 @@ func _on_catch(body: Node) -> void:
 		game_over()
 
 func game_over() -> void:
-	get_tree().paused = true
-	print("GAME OVER")
+	if get_parent().has_method("game_over"):
+		get_parent().game_over()
+	else:
+		get_tree().paused = true
+		print("GAME OVER")
 
 
 func _ready() -> void:
